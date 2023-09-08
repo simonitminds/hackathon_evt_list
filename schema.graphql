@@ -7,11 +7,20 @@ scalar DateTime
 
 """Holds all relevant information about an event"""
 type Event {
+  """The description of the event"""
   Description: String!
+
+  """The title of the event"""
   Title: String!
+
+  """The end date of the event"""
   end: DateTime!
   id: Int!
+
+  """The location of the event"""
   location: Location!
+
+  """The start date of the event"""
   start: DateTime!
   users: [User]
 }
@@ -19,14 +28,32 @@ type Event {
 """Holds all relevant information about a location"""
 type Location {
   id: Int!
+
+  """The name of the location"""
   office: String!
 }
 
+type Mutation {
+  createEvent(arg: createEventArgs!): Event
+  deleteEvent(id: Int!): Event
+  updateEvent(data: createEventArgs!, id: Int!): Event
+}
+
 type Query {
-  ok: Boolean!
+  event(id: Int!): Event
+  events: [Event]
 }
 
 """Holds all relevant information about a user"""
 type User {
   id: Int!
+}
+
+input createEventArgs {
+  description: String!
+  end: String!
+  location: Int!
+  office: String!
+  start: String!
+  title: String!
 }

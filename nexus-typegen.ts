@@ -29,6 +29,14 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  createEventArgs: { // input type
+    description: string; // String!
+    end: string; // String!
+    location: number; // Int!
+    office: string; // String!
+    start: string; // String!
+    title: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -55,6 +63,7 @@ export interface NexusGenObjects {
     id: number; // Int!
     office: string; // String!
   }
+  Mutation: {};
   Query: {};
   User: { // root type
     id: number; // Int!
@@ -85,8 +94,14 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     office: string; // String!
   }
+  Mutation: { // field return type
+    createEvent: NexusGenRootTypes['Event'] | null; // Event
+    deleteEvent: NexusGenRootTypes['Event'] | null; // Event
+    updateEvent: NexusGenRootTypes['Event'] | null; // Event
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    event: NexusGenRootTypes['Event'] | null; // Event
+    events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
   }
   User: { // field return type
     id: number; // Int!
@@ -107,8 +122,14 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     office: 'String'
   }
+  Mutation: { // field return type name
+    createEvent: 'Event'
+    deleteEvent: 'Event'
+    updateEvent: 'Event'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    event: 'Event'
+    events: 'Event'
   }
   User: { // field return type name
     id: 'Int'
@@ -116,6 +137,23 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createEvent: { // args
+      arg: NexusGenInputs['createEventArgs']; // createEventArgs!
+    }
+    deleteEvent: { // args
+      id: number; // Int!
+    }
+    updateEvent: { // args
+      data: NexusGenInputs['createEventArgs']; // createEventArgs!
+      id: number; // Int!
+    }
+  }
+  Query: {
+    event: { // args
+      id: number; // Int!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -126,7 +164,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 
