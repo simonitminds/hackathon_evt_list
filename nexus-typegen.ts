@@ -30,9 +30,11 @@ declare global {
 
 export interface NexusGenInputs {
   createEventArgs: { // input type
+    ai_image_keywords: string[]; // [String!]!
     description: string; // String!
     end: string; // String!
-    location: number; // Int!
+    keywords: string[]; // [String!]!
+    location?: number | null; // Int
     office: string; // String!
     start: string; // String!
     title: string; // String!
@@ -55,8 +57,10 @@ export interface NexusGenObjects {
   Event: { // root type
     Description: string; // String!
     Title: string; // String!
+    ai_image_style_tags: string[]; // [String!]!
     end: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
+    keywords: string[]; // [String!]!
     start: NexusGenScalars['DateTime']; // DateTime!
   }
   Location: { // root type
@@ -84,9 +88,11 @@ export interface NexusGenFieldTypes {
   Event: { // field return type
     Description: string; // String!
     Title: string; // String!
+    ai_image_style_tags: string[]; // [String!]!
     end: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    location: NexusGenRootTypes['Location']; // Location!
+    keywords: string[]; // [String!]!
+    location: NexusGenRootTypes['Location'] | null; // Location
     start: NexusGenScalars['DateTime']; // DateTime!
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
@@ -95,6 +101,8 @@ export interface NexusGenFieldTypes {
     office: string; // String!
   }
   Mutation: { // field return type
+    LocationCreate: NexusGenRootTypes['Location'] | null; // Location
+    LocationDelete: NexusGenRootTypes['Location'] | null; // Location
     createEvent: NexusGenRootTypes['Event'] | null; // Event
     deleteEvent: NexusGenRootTypes['Event'] | null; // Event
     updateEvent: NexusGenRootTypes['Event'] | null; // Event
@@ -102,6 +110,8 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     event: NexusGenRootTypes['Event'] | null; // Event
     events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
+    location: NexusGenRootTypes['Location'] | null; // Location
+    locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
   }
   User: { // field return type
     id: number; // Int!
@@ -112,8 +122,10 @@ export interface NexusGenFieldTypeNames {
   Event: { // field return type name
     Description: 'String'
     Title: 'String'
+    ai_image_style_tags: 'String'
     end: 'DateTime'
     id: 'Int'
+    keywords: 'String'
     location: 'Location'
     start: 'DateTime'
     users: 'User'
@@ -123,6 +135,8 @@ export interface NexusGenFieldTypeNames {
     office: 'String'
   }
   Mutation: { // field return type name
+    LocationCreate: 'Location'
+    LocationDelete: 'Location'
     createEvent: 'Event'
     deleteEvent: 'Event'
     updateEvent: 'Event'
@@ -130,6 +144,8 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     event: 'Event'
     events: 'Event'
+    location: 'Location'
+    locations: 'Location'
   }
   User: { // field return type name
     id: 'Int'
@@ -138,6 +154,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    LocationCreate: { // args
+      office: string; // String!
+    }
+    LocationDelete: { // args
+      id: number; // Int!
+    }
     createEvent: { // args
       arg: NexusGenInputs['createEventArgs']; // createEventArgs!
     }
@@ -151,6 +173,9 @@ export interface NexusGenArgTypes {
   }
   Query: {
     event: { // args
+      id: number; // Int!
+    }
+    location: { // args
       id: number; // Int!
     }
   }

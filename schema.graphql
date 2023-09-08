@@ -13,12 +13,18 @@ type Event {
   """The title of the event"""
   Title: String!
 
+  """AI image generation tags"""
+  ai_image_style_tags: [String!]!
+
   """The end date of the event"""
   end: DateTime!
   id: Int!
 
+  """event keywords"""
+  keywords: [String!]!
+
   """The location of the event"""
-  location: Location!
+  location: Location
 
   """The start date of the event"""
   start: DateTime!
@@ -34,6 +40,8 @@ type Location {
 }
 
 type Mutation {
+  LocationCreate(office: String!): Location
+  LocationDelete(id: Int!): Location
   createEvent(arg: createEventArgs!): Event
   deleteEvent(id: Int!): Event
   updateEvent(data: createEventArgs!, id: Int!): Event
@@ -42,6 +50,8 @@ type Mutation {
 type Query {
   event(id: Int!): Event
   events: [Event]
+  location(id: Int!): Location
+  locations: [Location]
 }
 
 """Holds all relevant information about a user"""
@@ -50,9 +60,11 @@ type User {
 }
 
 input createEventArgs {
+  ai_image_keywords: [String!]!
   description: String!
   end: String!
-  location: Int!
+  keywords: [String!]!
+  location: Int
   office: String!
   start: String!
   title: String!

@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator nexusPrisma {
@@ -15,22 +15,26 @@ generator nexusPrisma {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                  Int       @id @default(autoincrement())
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   /// The title of the event
-  Title       String
+  Title               String
   /// The description of the event
-  Description String
+  Description         String
   /// The start date of the event
-  start       DateTime
+  start               DateTime
   /// The end date of the event
-  end         DateTime
+  end                 DateTime
   /// The location of the event
-  location    Location @relation(fields: [locationId], references: [id])
-  locationId  Int
+  location            Location? @relation(fields: [locationId], references: [id])
+  locationId          Int?
   /// The office of the event
-  office      String
+  office              String
+  /// AI image generation tags
+  ai_image_style_tags String[]
+  /// event keywords
+  keywords            String[]
 
   UserOnEvents UserOnEvents[]
 }

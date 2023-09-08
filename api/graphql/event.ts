@@ -19,6 +19,8 @@ export const event = objectType({
     t.field(Event.Description);
     t.field(Event.Title);
     t.field(Event.location);
+    t.field(Event.keywords);
+    t.field(Event.ai_image_style_tags);
     t.field("users", {
       type: list("User"),
       resolve: async (parent, args, ctx) => {
@@ -41,8 +43,10 @@ const createEventArgs = inputObjectType({
     t.nonNull.string("description");
     t.nonNull.string("start");
     t.nonNull.string("end");
-    t.nonNull.int("location");
+    t.int("location");
     t.nonNull.string("office");
+    t.nonNull.list.nonNull.string("keywords");
+    t.nonNull.list.nonNull.string("ai_image_keywords");
   },
 });
 
@@ -83,8 +87,9 @@ export const mutations = extendType({
             Description: arg.description,
             start: new Date(arg.start),
             end: new Date(arg.end),
-            location: { connect: { id: arg.location } },
             office: arg.office,
+            ai_image_style_tags: { set: arg.ai_image_keywords },
+            keywords: { set: arg.keywords },
           },
         });
       },
@@ -106,7 +111,7 @@ export const mutations = extendType({
 
             start: new Date(data.start),
             end: new Date(data.end),
-            location: { connect: { id: data.location } },
+
             office: data.office,
           },
         });
