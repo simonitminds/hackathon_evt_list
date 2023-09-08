@@ -101,8 +101,11 @@ export interface NexusGenFieldTypes {
     office: string; // String!
   }
   Mutation: { // field return type
+    EventJoin: NexusGenRootTypes['Event'] | null; // Event
+    EventLeave: NexusGenRootTypes['Event'] | null; // Event
     LocationCreate: NexusGenRootTypes['Location'] | null; // Location
     LocationDelete: NexusGenRootTypes['Location'] | null; // Location
+    UserCreate: NexusGenRootTypes['User'] | null; // User
     createEvent: NexusGenRootTypes['Event'] | null; // Event
     deleteEvent: NexusGenRootTypes['Event'] | null; // Event
     updateEvent: NexusGenRootTypes['Event'] | null; // Event
@@ -112,6 +115,8 @@ export interface NexusGenFieldTypes {
     events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
     location: NexusGenRootTypes['Location'] | null; // Location
     locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
+    user: NexusGenRootTypes['User'] | null; // User
+    users: NexusGenRootTypes['User'][]; // [User!]!
   }
   User: { // field return type
     id: number; // Int!
@@ -135,8 +140,11 @@ export interface NexusGenFieldTypeNames {
     office: 'String'
   }
   Mutation: { // field return type name
+    EventJoin: 'Event'
+    EventLeave: 'Event'
     LocationCreate: 'Location'
     LocationDelete: 'Location'
+    UserCreate: 'User'
     createEvent: 'Event'
     deleteEvent: 'Event'
     updateEvent: 'Event'
@@ -146,6 +154,8 @@ export interface NexusGenFieldTypeNames {
     events: 'Event'
     location: 'Location'
     locations: 'Location'
+    user: 'User'
+    users: 'User'
   }
   User: { // field return type name
     id: 'Int'
@@ -154,11 +164,23 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    EventJoin: { // args
+      eventId: number; // Int!
+      userId: number; // Int!
+    }
+    EventLeave: { // args
+      eventId: number; // Int!
+      userId: number; // Int!
+    }
     LocationCreate: { // args
       office: string; // String!
     }
     LocationDelete: { // args
       id: number; // Int!
+    }
+    UserCreate: { // args
+      email: string; // String!
+      name?: string | null; // String
     }
     createEvent: { // args
       arg: NexusGenInputs['createEventArgs']; // createEventArgs!
@@ -176,6 +198,9 @@ export interface NexusGenArgTypes {
       id: number; // Int!
     }
     location: { // args
+      id: number; // Int!
+    }
+    user: { // args
       id: number; // Int!
     }
   }

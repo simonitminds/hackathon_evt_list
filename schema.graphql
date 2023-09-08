@@ -40,8 +40,11 @@ type Location {
 }
 
 type Mutation {
+  EventJoin(eventId: Int!, userId: Int!): Event
+  EventLeave(eventId: Int!, userId: Int!): Event
   LocationCreate(office: String!): Location
   LocationDelete(id: Int!): Location
+  UserCreate(email: String!, name: String): User
   createEvent(arg: createEventArgs!): Event
   deleteEvent(id: Int!): Event
   updateEvent(data: createEventArgs!, id: Int!): Event
@@ -52,6 +55,8 @@ type Query {
   events: [Event]
   location(id: Int!): Location
   locations: [Location]
+  user(id: Int!): User
+  users: [User!]!
 }
 
 """Holds all relevant information about a user"""
