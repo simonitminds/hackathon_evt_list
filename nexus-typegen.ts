@@ -112,6 +112,8 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     event: NexusGenRootTypes['Event'] | null; // Event
+    eventCreateDescription: string | null; // String
+    eventCreateImage: string | null; // String
     events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
     location: NexusGenRootTypes['Location'] | null; // Location
     locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
@@ -151,6 +153,8 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     event: 'Event'
+    eventCreateDescription: 'String'
+    eventCreateImage: 'String'
     events: 'Event'
     location: 'Location'
     locations: 'Location'
@@ -195,6 +199,12 @@ export interface NexusGenArgTypes {
   }
   Query: {
     event: { // args
+      id: number; // Int!
+    }
+    eventCreateDescription: { // args
+      id: number; // Int!
+    }
+    eventCreateImage: { // args
       id: number; // Int!
     }
     location: { // args

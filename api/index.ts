@@ -3,9 +3,12 @@ import { PrismaClient } from "@prisma/client";
 import { server } from "./server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { ContextType } from "./context";
+import { AIGenerationService } from "./Ai/ai_model_anders";
 
+const db = new PrismaClient();
 const context: ContextType = {
-  db: new PrismaClient(),
+  db,
+  ai_client: new AIGenerationService("danish"),
 };
 
 const port = process.env.PORT || 4000;

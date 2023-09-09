@@ -70,6 +70,29 @@ export const queryies = extendType({
         });
       },
     });
+    t.field("eventCreateImage", {
+      type: "String",
+      args: { id: nonNull(intArg()) },
+      resolve: async (parent, { id }, ctx) => {
+        const event = await ctx.db.event.findFirst({ where: { id } });
+        if (!event) return null;
+        return (
+          (await ctx.ai_client.generateImageURLBasedOnConcisePrompt(event)) ??
+          null
+        );
+      },
+    });
+    t.field("eventCreateDescription", {
+      type: "String",
+      args: { id: nonNull(intArg()) },
+      resolve: async (parent, { id }, ctx) => {
+        const event = await ctx.db.event.findFirst({ where: { id } });
+        if (!event) return null;
+        return (
+          (await ctx.ai_client.generateEventDescriptionFromEvent(event)) ?? null
+        );
+      },
+    });
   },
 });
 

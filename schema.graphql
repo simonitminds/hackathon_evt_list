@@ -52,6 +52,8 @@ type Mutation {
 
 type Query {
   event(id: Int!): Event
+  eventCreateDescription(id: Int!): String
+  eventCreateImage(id: Int!): String
   events: [Event]
   location(id: Int!): Location
   locations: [Location]
