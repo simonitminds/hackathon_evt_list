@@ -15,9 +15,9 @@ generator nexusPrisma {
 }
 
 model Event {
-  id                  Int       @id @default(autoincrement())
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  id                  Int            @id @default(autoincrement())
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
   /// The title of the event
   Title               String
   /// The description of the event
@@ -27,7 +27,7 @@ model Event {
   /// The end date of the event
   end                 DateTime
   /// The location of the event
-  location            Location? @relation(fields: [locationId], references: [id])
+  location            Location?      @relation(fields: [locationId], references: [id])
   locationId          Int?
   /// The office of the event
   office              String
@@ -35,8 +35,11 @@ model Event {
   ai_image_style_tags String[]
   /// event keywords
   keywords            String[]
-
-  UserOnEvents UserOnEvents[]
+  // ai desc
+  ai_description      String?
+  // ai title
+  ai_title            String?
+  UserOnEvents        UserOnEvents[]
 }
 
 model UserOnEvents {

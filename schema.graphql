@@ -12,9 +12,11 @@ type Event {
 
   """The title of the event"""
   Title: String!
+  ai_description: String
 
   """AI image generation tags"""
   ai_image_style_tags: [String!]!
+  ai_title: String
 
   """The end date of the event"""
   end: DateTime!
@@ -53,7 +55,8 @@ type Mutation {
 type Query {
   event(id: Int!): Event
   eventCreateDescription(id: Int!): String
-  eventCreateImage(id: Int!): String
+  eventCreateImage(force_update: Boolean!, id: Int!): String
+  eventHypeText(id: Int!): String
   events: [Event!]!
   location(id: Int!): Location
   locations: [Location]

@@ -6,6 +6,7 @@ import {
   intArg,
   nonNull,
   inputObjectType,
+  booleanArg,
 } from "nexus";
 
 export const event = objectType({
@@ -20,6 +21,8 @@ export const event = objectType({
     t.field(Event.Title);
     t.field(Event.location);
     t.field(Event.keywords);
+    t.field(Event.ai_title);
+    t.field(Event.ai_description);
     t.field(Event.ai_image_style_tags);
     t.field("users", {
       type: list("User"),
@@ -72,14 +75,37 @@ export const queryies = extendType({
     });
     t.field("eventCreateImage", {
       type: "String",
+      args: { id: nonNull(intArg()), force_update: nonNull(booleanArg()) },
+      resolve: async (parent, { id, force_update }, ctx) => {
+        const event = await ctx.db.event.findFirst({ where: { id } });
+        if (!event) return null;
+        if (event.ai_title && force_update == false) return event.ai_title;
+
+        const img =
+          (await ctx.ai_client.generateImageURLBasedOnConcisePrompt(event)) ??
+          null;
+
+        if (!img) return null;
+        await ctx.db.event.update({
+          where: { id },
+          data: {
+            ai_title: img,
+          },
+        });
+
+        return img;
+      },
+    });
+    t.field("eventHypeText", {
+      type: "String",
       args: { id: nonNull(intArg()) },
       resolve: async (parent, { id }, ctx) => {
         const event = await ctx.db.event.findFirst({ where: { id } });
         if (!event) return null;
-        return (
-          (await ctx.ai_client.generateImageURLBasedOnConcisePrompt(event)) ??
-          null
+        const hype_text = await ctx.ai_client.generateHypeMessageForEvent(
+          event
         );
+        return hype_text;
       },
     });
     t.field("eventCreateDescription", {
@@ -88,9 +114,19 @@ export const queryies = extendType({
       resolve: async (parent, { id }, ctx) => {
         const event = await ctx.db.event.findFirst({ where: { id } });
         if (!event) return null;
-        return (
-          (await ctx.ai_client.generateEventDescriptionFromEvent(event)) ?? null
-        );
+        if (event.ai_description) return event.ai_description;
+        const ai_desc =
+          (await ctx.ai_client.generateEventDescriptionFromEvent(event)) ??
+          null;
+        if (!ai_desc) return null;
+
+        await ctx.db.event.update({
+          where: { id },
+          data: {
+            ai_description: ai_desc,
+          },
+        });
+        return ai_desc;
       },
     });
   },

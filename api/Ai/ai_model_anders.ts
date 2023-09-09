@@ -14,7 +14,11 @@ type DELETE = {
 };
 type Event = Pick<
   Prisma.EventGroupByOutputType,
-  "Description" | "Title" | "keywords" | "ai_image_style_tags"
+  | "Description"
+  | "Title"
+  | "keywords"
+  | "ai_image_style_tags"
+  | "ai_description"
 >;
 
 export class AIGenerationService {
@@ -105,7 +109,9 @@ export class AIGenerationService {
   public async generateEventSummary(event: Event): Promise<string> {
     const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 250 });
 
-    const docs = await textSplitter.createDocuments([event.Description]);
+    const docs = await textSplitter.createDocuments([
+      event.ai_description || event.Description,
+    ]);
 
     const summerizeChain = loadSummarizationChain(this.langchain_OpenAI, {
       type: "map_reduce",

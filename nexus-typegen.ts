@@ -57,7 +57,9 @@ export interface NexusGenObjects {
   Event: { // root type
     Description: string; // String!
     Title: string; // String!
+    ai_description?: string | null; // String
     ai_image_style_tags: string[]; // [String!]!
+    ai_title?: string | null; // String
     end: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     keywords: string[]; // [String!]!
@@ -88,7 +90,9 @@ export interface NexusGenFieldTypes {
   Event: { // field return type
     Description: string; // String!
     Title: string; // String!
+    ai_description: string | null; // String
     ai_image_style_tags: string[]; // [String!]!
+    ai_title: string | null; // String
     end: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     keywords: string[]; // [String!]!
@@ -114,6 +118,7 @@ export interface NexusGenFieldTypes {
     event: NexusGenRootTypes['Event'] | null; // Event
     eventCreateDescription: string | null; // String
     eventCreateImage: string | null; // String
+    eventHypeText: string | null; // String
     events: NexusGenRootTypes['Event'][]; // [Event!]!
     location: NexusGenRootTypes['Location'] | null; // Location
     locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
@@ -129,7 +134,9 @@ export interface NexusGenFieldTypeNames {
   Event: { // field return type name
     Description: 'String'
     Title: 'String'
+    ai_description: 'String'
     ai_image_style_tags: 'String'
+    ai_title: 'String'
     end: 'DateTime'
     id: 'Int'
     keywords: 'String'
@@ -155,6 +162,7 @@ export interface NexusGenFieldTypeNames {
     event: 'Event'
     eventCreateDescription: 'String'
     eventCreateImage: 'String'
+    eventHypeText: 'String'
     events: 'Event'
     location: 'Location'
     locations: 'Location'
@@ -205,6 +213,10 @@ export interface NexusGenArgTypes {
       id: number; // Int!
     }
     eventCreateImage: { // args
+      force_update: boolean; // Boolean!
+      id: number; // Int!
+    }
+    eventHypeText: { // args
       id: number; // Int!
     }
     location: { // args
