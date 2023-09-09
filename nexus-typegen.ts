@@ -114,7 +114,7 @@ export interface NexusGenFieldTypes {
     event: NexusGenRootTypes['Event'] | null; // Event
     eventCreateDescription: string | null; // String
     eventCreateImage: string | null; // String
-    events: Array<NexusGenRootTypes['Event'] | null> | null; // [Event]
+    events: NexusGenRootTypes['Event'][]; // [Event!]!
     location: NexusGenRootTypes['Location'] | null; // Location
     locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
     user: NexusGenRootTypes['User'] | null; // User

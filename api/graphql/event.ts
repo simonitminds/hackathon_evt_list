@@ -55,7 +55,7 @@ export const queryies = extendType({
   definition(t) {
     // get all events
     t.field("events", {
-      type: list("Event"),
+      type: nonNull(list(nonNull("Event"))),
       resolve: async (parent, args, ctx) => {
         return ctx.db.event.findMany();
       },

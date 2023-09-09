@@ -6,9 +6,12 @@ import { ContextType } from "./context";
 import { AIGenerationService } from "./Ai/ai_model_anders";
 
 const db = new PrismaClient();
+const api_key = process.env.OPEN_AI_API_KEY;
+if (!api_key) throw new Error("No API key found for OpenAI");
+
 const context: ContextType = {
   db,
-  ai_client: new AIGenerationService("danish"),
+  ai_client: new AIGenerationService("danish", api_key),
 };
 
 const port = process.env.PORT || 4000;

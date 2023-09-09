@@ -24,14 +24,14 @@ export class AIGenerationService {
 
   private langchain_OpenAI: langchainOpenAI;
 
-  constructor(language: string = "danish") {
+  constructor(language: string = "danish", key: string = "") {
     this.openAI = new OpenAI({
-      apiKey: "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",
+      apiKey: key,
     });
 
     this.langchain_OpenAI = new langchainOpenAI({
       temperature: 0.5,
-      openAIApiKey: "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",
+      openAIApiKey: key,
     });
 
     this.language = language;

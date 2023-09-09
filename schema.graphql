@@ -54,7 +54,7 @@ type Query {
   event(id: Int!): Event
   eventCreateDescription(id: Int!): String
   eventCreateImage(id: Int!): String
-  events: [Event]
+  events: [Event!]!
   location(id: Int!): Location
   locations: [Location]
   user(id: Int!): User
